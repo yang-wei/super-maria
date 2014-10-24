@@ -14,7 +14,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('script', function() {
-    gulp.src('./app/*.js')
+    gulp.src('./app/scripts/*.js')
         .pipe(connect.reload());
 });
 
