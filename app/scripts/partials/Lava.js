@@ -1,7 +1,3 @@
-;(function() {
-
-    'use strict';
-
     // Lava type
     // moving horizontally -> =
     // moving vertically   -> |
@@ -19,7 +15,6 @@
             this.repeatPos = pos;
         }
     }    
-    
+
     Lava.prototype.type = "Lava";
 
-})();

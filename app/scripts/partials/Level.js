@@ -1,7 +1,3 @@
-(function() {
-
-    'use strict';
-
     function Level(plan) {
             this.width = plan[0].length;
             this.height = plan.length;
@@ -42,5 +38,3 @@
         Level.prototype.isFinished = function() {
             return this.status != null && this.finishedDelay < 0;
         };
-
-})

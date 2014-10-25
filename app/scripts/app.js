@@ -1,7 +1,3 @@
-;(function() {
-    
-    'use strict';
-    
     // level
     var simpleLevel = [
         "                     ",
@@ -13,17 +9,12 @@
         "        xxxxxxxxxxx  ",
         "                     "
     ];
-    
+
     // defined character for each symbol
     var actorChars = {
-       "@": Player,
-       "o": Coin,
-       "=": Lava,
-       "|": Lava,
-       "v": Lava 
+        "@": Player,
+        "o": Coin,
+        "=": Lava,
+        "|": Lava,
+        "v": Lava 
     };
-
-        
-})();
-
-

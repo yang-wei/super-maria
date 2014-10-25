@@ -1,7 +1,3 @@
-;(function() {
-
-    'use strict';
-
     function Player(pos) {
         // player position 
         this.pos = pos.plus(new Vector(0, -0.5));
@@ -14,5 +10,3 @@
     }
 
     Player.prototype.type = "Player";
-
-})();

@@ -1,7 +1,3 @@
-;(function() {
-
-    'use strict';
-
     function Vector(x,y) {
         this.x = x;
         this.y = y;
@@ -14,7 +10,4 @@
     Vector.prototype.times = function(factor) {
         return new Vector(this.x * factor, this.y * factor);
     };
-
-});
-
 
