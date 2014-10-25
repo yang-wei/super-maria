@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    concat = require('gulp-concat'),
     connect = require('gulp-connect');
 
 gulp.task('connect', function() {
@@ -14,13 +15,20 @@ gulp.task('html', function() {
 });
 
 gulp.task('script', function() {
-    gulp.src('./app/scripts/*.js')
-        .pipe(connect.reload());
+    gulp.src([
+        './app/scripts/commons/intro.js',
+        './app/scripts/app.js',
+        './app/scripts/partials/*.js',
+        './app/scripts/commons/outro.js'
+    ])
+        .pipe(connect.reload())
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest('./app/'));
 });
 
 gulp.task('watch', function() {
     gulp.watch(['./app/*.html'], ['html']);
-    gulp.watch(['./app/*.js'], ['script']);
+    gulp.watch(['./app/scripts/app.js', './app/scripts/**/*.js'], ['script']);
 });
 
-gulp.task('default', ['connect', 'watch']);
+gulp.task('default', ['script', 'connect', 'watch']);
