@@ -11,11 +11,11 @@
                 for (var x = 0; x < this.width; x++) {
                     var character = line[x];
                     // check if character is property of actorChars 
-                    var Actor = actorChars[character];
+                    var Actor = actorChars[character], type;
                     
                     if (Actor) {
                         // initial position of dynamic characters need to be stored
-                        this.actors.push(Actor)
+                        this.actors.push(new Actor(new Vector(x,y), character));
                     } else if (character === "x") {
                         type = "wall"; 
                     } else if (character === "!") {
@@ -23,7 +23,7 @@
                     }
                     gridLine.push(type);
                 }
-                this.grid.push(gridline);
+                this.grid.push(gridLine);
             }
             // filter out the player
             this.player = this.actors.filter(function(actor) {

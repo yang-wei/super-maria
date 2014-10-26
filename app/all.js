@@ -2,27 +2,6 @@
     'use strict';
 
 
-    // level
-    var simpleLevel = [
-        "                     ",
-        "                 =x  ",
-        "   x         oo   x  ",
-        "   x@       xxxx  x  ",
-        "   xxxxxx         x  ",
-        "        x!!!!!!!!!x  ",
-        "        xxxxxxxxxxx  ",
-        "                     "
-    ];
-
-    // defined character for each symbol
-    var actorChars = {
-        "@": Player,
-        "o": Coin,
-        "=": Lava,
-        "|": Lava,
-        "v": Lava 
-    };
-
     function Coin(pos) {
         this.basePos = this.pos = pos.plus(new Vector(0.1, 0.1));
         this.size = new Vector(0.6, 0.6);
@@ -67,11 +46,11 @@
                 for (var x = 0; x < this.width; x++) {
                     var character = line[x];
                     // check if character is property of actorChars 
-                    var Actor = actorChars[character];
+                    var Actor = actorChars[character], type;
                     
                     if (Actor) {
                         // initial position of dynamic characters need to be stored
-                        this.actors.push(Actor)
+                        this.actors.push(new Actor(new Vector(x,y), character));
                     } else if (character === "x") {
                         type = "wall"; 
                     } else if (character === "!") {
@@ -79,7 +58,7 @@
                     }
                     gridLine.push(type);
                 }
-                this.grid.push(gridline);
+                this.grid.push(gridLine);
             }
             // filter out the player
             this.player = this.actors.filter(function(actor) {
@@ -121,5 +100,30 @@
         return new Vector(this.x * factor, this.y * factor);
     };
 
+
+    // level
+    var simpleLevel = [
+        "                     ",
+        "                 =x  ",
+        "   x         oo   x  ",
+        "   x@       xxxx  x  ",
+        "   xxxxxx         x  ",
+        "        x!!!!!!!!!x  ",
+        "        xxxxxxxxxxx  ",
+        "                     "
+    ];
+
+    // defined character for each symbol
+    var actorChars = {
+        "@": Player,
+        "o": Coin,
+        "=": Lava,
+        "|": Lava,
+        "v": Lava 
+    };
+
+    // init
+     var simpleLevel = new Level(simpleLevel);
+     console.log(simpleLevel.width, 'x', simpleLevel.height);
 
 })(window);

@@ -18,3 +18,7 @@
         "|": Lava,
         "v": Lava 
     };
+
+    // init
+     var simpleLevel = new Level(simpleLevel);
+     console.log(simpleLevel.width, 'x', simpleLevel.height);
