@@ -7,3 +7,8 @@
 
     Coin.prototype.type = "coin";
 
+    Coin.prototype.act = function(step) {
+        this.wobble += step * opts.wobbleSpeed;
+        var wobblePos = Math.sin(this.wobble) * opts.wobbleDist;
+        this.pos = this.basePos.plus(new Vector(0, wobblePos));
+    };

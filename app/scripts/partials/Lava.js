@@ -18,3 +18,12 @@
 
     Lava.prototype.type = "Lava";
 
+    Lava.prototype.act = function(step, level) {
+       var newPos = this.pos.plus(this.speed.times(step));
+       if(!level.isBlockedAt(newPos, this.size))
+           this.pos = newPos;
+       else if (this.repeatPos)
+           this.pos = this.repeatPos;
+       else
+           this.speed = this.speed.times(-1);
+    }
