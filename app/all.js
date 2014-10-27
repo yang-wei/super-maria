@@ -2,6 +2,17 @@
     'use strict';
 
 
+    // propertis of actor's action
+    
+    var opts = {
+        maxStep : 0.05,
+        wobbleSpeed : 8,
+        wobbleDist: 0.05,
+        playerXSpeed: 7,
+        gravity: 30,
+        jumpSpeed: 17
+    };
+
     function Coin(pos) {
         this.basePos = this.pos = pos.plus(new Vector(0.1, 0.1));
         this.size = new Vector(0.6, 0.6);
@@ -11,6 +22,11 @@
 
     Coin.prototype.type = "coin";
 
+    Coin.prototype.act = function(step) {
+        this.wobble += step * opts.wobbleSpeed;
+        var wobblePos = Math.sin(this.wobble) * opts.wobbleDist;
+        this.pos = this.basePos.plus(new Vector(0, wobblePos));
+    };
 
     // Lava type
     // moving horizontally -> =
@@ -32,6 +48,15 @@
 
     Lava.prototype.type = "Lava";
 
+    Lava.prototype.act = function(step, level) {
+       var newPos = this.pos.plus(this.speed.times(step));
+       if(!level.isBlockedAt(newPos, this.size))
+           this.pos = newPos;
+       else if (this.repeatPos)
+           this.pos = this.repeatPos;
+       else
+           this.speed = this.speed.times(-1);
+    }
 
     function Level(plan) {
             this.width = plan[0].length;
@@ -40,13 +65,14 @@
             this.grid = [];
             // a collection of moving characters on the level plan
             this.actors = [];
-             
+            // fill in grid and actors arrays 
             for (var y = 0; y < this.height; y++) {
                 var line = plan[y], gridLine = [];
                 for (var x = 0; x < this.width; x++) {
-                    var character = line[x];
+                    var character = line[x],
                     // check if character is property of actorChars 
-                    var Actor = actorChars[character], type;
+                        Actor = actorChars[character],
+                        type;
                     
                     if (Actor) {
                         // initial position of dynamic characters need to be stored
@@ -73,6 +99,73 @@
         Level.prototype.isFinished = function() {
             return this.status != null && this.finishedDelay < 0;
         };
+        
+        // return the type of character in a position
+        Level.prototype.isBlockedAt = function(pos, size) {
+            var xStart = Math.floor(pos.x),
+                xEnd = Math.ceil(pos.x + size.x),
+                yStart = Math.floor(pos.y),
+                yEnd = Math.ceil(pos.y + size.y);     
+
+            if(xStart < 0 || xEnd > this.width || yStart < 0)
+                return "wall";
+            if(yEnd > this.height)
+                return "lava";
+            for(var y = yStart; y < yEnd; y++) {
+                for(var x = xStart; x < xEnd; x++) {
+                    // if its not space
+                    var type = grid[y][x];
+                    if(type) return type;
+                }
+            }
+        };
+        
+        // function to check if 2 actor on same position 
+        Level.prototype.actorAt = function(actor) {
+            for(var i = 0; i < this.actors.length; i++) {
+                otherActor = this.actors[i];
+                if( other !== actor &&
+                    actor.pos.x + actor.size.x > otherActor.pos.x &&
+                    actor.pos.x < otherActor.pos.x + otherActor.size.x &&
+                    actor.pos.y + actor.size.y > otherActor.pos.y &&
+                    actor.pos.y < otherActor.pos.y + otherActor.size.y 
+                  )
+                return otherActor;    
+            }
+        }
+        
+        Level.prototype.animate = function(step, keys) {
+            if(this.status != null)
+               this.finishDelay -= step; 
+
+            while(step > 0) {
+               var thisStep = Math.min(step, opts.maxStep);
+               this.actors.forEach(function(actor) {
+                    actor.act(thisStep, this, keys);
+               }, this);
+               step -= thisStep;
+           }
+        };
+
+        Level.prototype.playerTouched = function(type, actor) {
+            if(type === "lava" && this.status === null) {
+                this.status = "lost";
+                this.finishDelay = 1;
+            } else if(type === "coin") {
+                // remove collected coin
+                this.actors = this.actors.filter(function(other) {
+                    return other !== actor;
+                });
+                // check if all coins are collected
+                var allCoinsCollected = !this.actors.some(function(actor) {
+                    return actor.type === "coin";
+                });
+                if(allCoinsCollected) {
+                    this.status = "won";
+                    this.finishDelay = 1;
+                }
+            }
+        };
 
     function Player(pos) {
         // player position 
@@ -86,6 +179,57 @@
     }
 
     Player.prototype.type = "player";
+    
+    Player.prototype.moveX = function(step, level, keys) {
+        this.speed.x = 0;
+        if (keys.left) {
+            this.speed.x -= opts.playerXSpeed;
+        }
+        if (keys.right) {
+            this.speed.x += opts.playerXSpeed;
+        }
+
+        var motion = new Vector(this.speed.x * step, 0);
+        var newPos = this.pos.plus(motion);
+        var obstacle = level.isBlockedAt(newPos, this.size);
+        if(obstacle) {
+            level.playerTouched(obstacle);
+        } else {
+            this.pos = newPos;
+        }
+    }
+
+    Player.prototype.moveY = function(step, level, keys) {
+        this.speed.y += step * gravity;
+        var motion = new Vector(0, this.speed.y * step);
+        var newPos = this.pos.plus(motion);
+        var obstacle = level.isBlockedAt(newPos, this.size);
+        if(obstacle) {
+            level.playerTouched(obstacle);
+            if(keys.up && this.speed.y > 0)
+                this.speed.y = -opts.jumpSpeed;
+            else
+                this.speed.y = 0;
+        } else {
+            this.pos = newPos;
+        }
+    };
+
+    Player.prototype.act = function(step, level, keys) {
+        this.moveX(step, level, keys);
+        this.moveY(step, level, keys);
+
+        var otherActor = level.actorAt(this);    
+        // player touches other actors
+        if(otherActor)
+            level.playerTouched(otherActor.type, otherActor);
+
+        // Losing animation
+        if(level.status === "lost") {
+            this.pos.y += step;
+            this.size.y -= step;
+        }
+    };
 
     function Vector(x,y) {
         this.x = x;

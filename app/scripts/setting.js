@@ -7,4 +7,4 @@
         playerXSpeed: 7,
         gravity: 30,
         jumpSpeed: 17
-    }
+    };
