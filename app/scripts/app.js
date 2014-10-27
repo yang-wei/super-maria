@@ -20,7 +20,6 @@
     };
 
     // init
-     var simpleLevel = new Level(simpleLevel);
-     console.log(simpleLevel.width, 'x', simpleLevel.height);
-
-     console.log(simpleLevel);
+    var simpleLevel = new Level(simpleLevel);
+    // console.log(simpleLevel.width, 'x', simpleLevel.height);
+    var display = new DisplayView(document.body, simpleLevel); 

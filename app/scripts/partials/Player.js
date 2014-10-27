@@ -9,4 +9,4 @@
         this.speed = new Vector(0, 0);
     }
 
-    Player.prototype.type = "Player";
+    Player.prototype.type = "player";
