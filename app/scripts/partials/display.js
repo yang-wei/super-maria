@@ -36,9 +36,9 @@
     DisplayView.prototype.drawActors = function() {
         var wrap = elem("div");
         this.level.actors.forEach(function(actor) {
-            var actorElem = wrap.appendChild(elem("div", "actor" + actor.type));
-            actorElem.style.width = actor.size.width * scale + "px";
-            actorElem.style.height = actor.size.height * scale + "px";
+            var actorElem = wrap.appendChild(elem("div", "actor " + actor.type));
+            actorElem.style.width = actor.size.x * scale + "px";
+            actorElem.style.height = actor.size.y * scale + "px";
             actorElem.style.left = actor.pos.x * scale + "px";
             actorElem.style.top = actor.pos.y * scale + "px";          
         });
@@ -68,7 +68,6 @@
         // player position
         var player = this.level.player,
             center = player.pos.plus(player.size.times(0.5)).times(scale);
-
         // scrolling viewport according to player position
         if(center.x < left + margin)
             this.wrap.scrollLeft = center.x - margin;
