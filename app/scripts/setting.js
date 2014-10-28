@@ -1,5 +1,12 @@
+    // Augmenting Function.prototype to avoid typing too many prototypes
+    Function.prototype.method = function(name, fn) {
+        if(!this.prototype[name]) {
+            this.prototype[name] = fn;
+            return this;
+        }
+    };    
+
     // propertis of actor's action
-    
     var opts = {
         maxStep : 0.05,
         wobbleSpeed : 8,
@@ -15,7 +22,7 @@
         32: 'spacebar',
         37: 'left',
         38: 'up',
-        39, 'right'
+        39: 'right'
     };
 
     function trackKeys(codes) {

@@ -2,8 +2,15 @@
     'use strict';
 
 
+    // Augmenting Function.prototype to avoid typing too many prototypes
+    Function.prototype.method = function(name, fn) {
+        if(!this.prototype[name]) {
+            this.prototype[name] = fn;
+            return this;
+        }
+    };    
+
     // propertis of actor's action
-    
     var opts = {
         maxStep : 0.05,
         wobbleSpeed : 8,
@@ -13,20 +20,42 @@
         jumpSpeed: 17
     };
 
+    // keyboard tracking keys
+    var keyboardCodes= {
+        27: 'escape',
+        32: 'spacebar',
+        37: 'left',
+        38: 'up',
+        39: 'right'
+    };
+
+    function trackKeys(codes) {
+       var keyPressed = Object.create(null);
+       function handler(event) {
+        if(codes.hasOwnProperty(event.keycode)) {
+            var down = event.type === "keydown";
+            keyPressed[codes[event.keycode]] = "down";
+            event.preventDefault();
+        }
+       }
+      addEventListener("keydown", handler);
+      addEventListener("keyup", handler); 
+    }
+
     function Coin(pos) {
         this.basePos = this.pos = pos.plus(new Vector(0.1, 0.1));
         this.size = new Vector(0.6, 0.6);
         // prop used when give the coin some motion
         this.wobble = 2 * Math.PI * Math.random();
+
+        this.type = "coin";
     }
-
-    Coin.prototype.type = "coin";
-
-    Coin.prototype.act = function(step) {
+    
+    Coin.method("act", function(step) {
         this.wobble += step * opts.wobbleSpeed;
         var wobblePos = Math.sin(this.wobble) * opts.wobbleDist;
-        this.pos = this.basePos.plus(new Vector(0, wobblePos));
-    };
+        this.pos = this.basePos.plus(new Vector(0, wobblePos)); 
+    });
 
     // Lava type
     // moving horizontally -> =
@@ -35,6 +64,7 @@
     function Lava(pos, type) {
         this.pos = pos;
         this.size = new Vector(1, 1);
+        this.type = "lava";
 
         if (type === "=") {
             this.speed = new Vector(2, 0);
@@ -46,17 +76,16 @@
         }
     }    
 
-    Lava.prototype.type = "Lava";
-
-    Lava.prototype.act = function(step, level) {
-       var newPos = this.pos.plus(this.speed.times(step));
-       if(!level.isBlockedAt(newPos, this.size))
-           this.pos = newPos;
-       else if (this.repeatPos)
-           this.pos = this.repeatPos;
-       else
-           this.speed = this.speed.times(-1);
-    }
+    Lava.method("act", function(step, level){
+        var newPos = this.pos.plus(this.speed.times(step));
+        if(!level.isBlockedAt(newPos, this.size))
+            this.pos = newPos;
+        else if(this.repeatPos)
+            this.pos = this.repeatPos; 
+        else
+            this.speed = this.speed.times(-1);
+    });
+    
 
     function Level(plan) {
             this.width = plan[0].length;
@@ -147,6 +176,7 @@
            }
         };
 
+        // react to what player had touch to decide win or lost
         Level.prototype.playerTouched = function(type, actor) {
             if(type === "lava" && this.status === null) {
                 this.status = "lost";
@@ -176,11 +206,10 @@
 
         // set initial speed to 0
         this.speed = new Vector(0, 0);
+        this.type = "player";
     }
 
-    Player.prototype.type = "player";
-    
-    Player.prototype.moveX = function(step, level, keys) {
+    Player.method("moveX", function(step, level, keys) {
         this.speed.x = 0;
         if (keys.left) {
             this.speed.x -= opts.playerXSpeed;
@@ -197,9 +226,9 @@
         } else {
             this.pos = newPos;
         }
-    }
+    });
 
-    Player.prototype.moveY = function(step, level, keys) {
+    Player.method("moveY", function(step, level, keys) {
         this.speed.y += step * gravity;
         var motion = new Vector(0, this.speed.y * step);
         var newPos = this.pos.plus(motion);
@@ -213,9 +242,9 @@
         } else {
             this.pos = newPos;
         }
-    };
+    });
 
-    Player.prototype.act = function(step, level, keys) {
+    Player.method("act", function(step, level, keys) {
         this.moveX(step, level, keys);
         this.moveY(step, level, keys);
 
@@ -229,7 +258,7 @@
             this.pos.y += step;
             this.size.y -= step;
         }
-    };
+    });
 
     function Vector(x,y) {
         this.x = x;
