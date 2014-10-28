@@ -87,6 +87,7 @@
            }
         };
 
+        // react to what player had touch to decide win or lost
         Level.prototype.playerTouched = function(type, actor) {
             if(type === "lava" && this.status === null) {
                 this.status = "lost";
