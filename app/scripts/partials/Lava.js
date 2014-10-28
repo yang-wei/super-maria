@@ -5,6 +5,7 @@
     function Lava(pos, type) {
         this.pos = pos;
         this.size = new Vector(1, 1);
+        this.type = "lava";
 
         if (type === "=") {
             this.speed = new Vector(2, 0);
@@ -16,14 +17,13 @@
         }
     }    
 
-    Lava.prototype.type = "Lava";
-
-    Lava.prototype.act = function(step, level) {
-       var newPos = this.pos.plus(this.speed.times(step));
-       if(!level.isBlockedAt(newPos, this.size))
-           this.pos = newPos;
-       else if (this.repeatPos)
-           this.pos = this.repeatPos;
-       else
-           this.speed = this.speed.times(-1);
-    }
+    Lava.method("act", function(step, level){
+        var newPos = this.pos.plus(this.speed.times(step));
+        if(!level.isBlockedAt(newPos, this.size))
+            this.pos = newPos;
+        else if(this.repeatPos)
+            this.pos = this.repeatPos; 
+        else
+            this.speed = this.speed.times(-1);
+    });
+    

@@ -7,11 +7,10 @@
 
         // set initial speed to 0
         this.speed = new Vector(0, 0);
+        this.type = "player";
     }
 
-    Player.prototype.type = "player";
-    
-    Player.prototype.moveX = function(step, level, keys) {
+    Player.method("moveX", function(step, level, keys) {
         this.speed.x = 0;
         if (keys.left) {
             this.speed.x -= opts.playerXSpeed;
@@ -28,9 +27,9 @@
         } else {
             this.pos = newPos;
         }
-    }
+    });
 
-    Player.prototype.moveY = function(step, level, keys) {
+    Player.method("moveY", function(step, level, keys) {
         this.speed.y += step * gravity;
         var motion = new Vector(0, this.speed.y * step);
         var newPos = this.pos.plus(motion);
@@ -44,9 +43,9 @@
         } else {
             this.pos = newPos;
         }
-    };
+    });
 
-    Player.prototype.act = function(step, level, keys) {
+    Player.method("act", function(step, level, keys) {
         this.moveX(step, level, keys);
         this.moveY(step, level, keys);
 
@@ -60,4 +59,4 @@
             this.pos.y += step;
             this.size.y -= step;
         }
-    };
+    });
