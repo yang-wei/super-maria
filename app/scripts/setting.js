@@ -36,4 +36,6 @@
        }
       addEventListener("keydown", handler);
       addEventListener("keyup", handler); 
+      return keyPressed;
     }
+
