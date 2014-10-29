@@ -54,7 +54,7 @@
             for(var y = yStart; y < yEnd; y++) {
                 for(var x = xStart; x < xEnd; x++) {
                     // if its not space
-                    var type = grid[y][x];
+                    var type = this.grid[y][x];
                     if(type) return type;
                 }
             }
@@ -63,8 +63,8 @@
         // function to check if 2 actor on same position 
         Level.prototype.actorAt = function(actor) {
             for(var i = 0; i < this.actors.length; i++) {
-                otherActor = this.actors[i];
-                if( other !== actor &&
+                var otherActor = this.actors[i];
+                if( otherActor !== actor &&
                     actor.pos.x + actor.size.x > otherActor.pos.x &&
                     actor.pos.x < otherActor.pos.x + otherActor.size.x &&
                     actor.pos.y + actor.size.y > otherActor.pos.y &&

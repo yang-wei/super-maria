@@ -30,7 +30,7 @@
     });
 
     Player.method("moveY", function(step, level, keys) {
-        this.speed.y += step * gravity;
+        this.speed.y += step * opts.gravity;
         var motion = new Vector(0, this.speed.y * step);
         var newPos = this.pos.plus(motion);
         var obstacle = level.isBlockedAt(newPos, this.size);
