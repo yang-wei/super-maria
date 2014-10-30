@@ -32,11 +32,6 @@
 
     var arrows = trackKeys(keyboardCodes);
 
-    // init
-    //var simpleLevel = new Level(simpleLevel);
-    // console.log(simpleLevel.width, 'x', simpleLevel.height);
-    //var display = new DisplayView(document.body, simpleLevel); 
-
     function runAnimation(frameFunc) {
         var start = null;
 
@@ -78,7 +73,7 @@
                     alert("You win !");
             }); 
        }
-      startLevel(0); 
+      startLevel(1); 
     }
 
 

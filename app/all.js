@@ -68,36 +68,36 @@ var GAME_LEVELS = [
    "                                                                                ",
   ],
   [
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                  xxx           ",
-   "                                                   xx      xx    xx!xx          ",
-   "                                    o o      xx                  x!!!x          ",
-   "                                                                 xx!xx          ",
-   "                                   xxxxx                          xvx           ",
-   "                                                                                ",
-   "                                          o o                                   ",
-   "                        o                                                       ",
-   "                                         xxxxx                             o    ",
-   "             xxxx       o       o                                               ",
-   "     @       x  x                                                xxxxx          ",
-   "xxxxxxxxxxxxxx  xxxxxxxxxxxxxxx   xxxxxxxxxxxxxxxxxxxx     xxxxxxx   xxxxxxxxxxx",
-   "                              x   x                  x     x                    ",
-   "                              x!!!x                  x!!!!!x                    ",
-   "                              x!!!x                  x!!!!!x                    ",
-   "                              xxxxx                  xxxxxxx                    ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
-   "                                                                                ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                     x          x                                             ",
+   "                                                                                    x!x        x!x                                            ",
+   "                                                                  xxx                v     o    v    o                       xxx              ",
+   "                                                   xx      xx    xx!xx                                                      xx!xx             ",
+   "                                    o o      xx                  x!!!x                    xxx       xxx                     x!!!x             ",
+   "                                                                 xxvxx                                                      xxvxx             ",
+   "                                   xxxxx                                            xxx        xxx       xxx                  o               ",
+   "                                                                                                                                              ",
+   "                                          o o                                                                                x x            o ",
+   "                        o                                                                                         xxx        xox            x ",
+   "                                         xxxxx                            o    xxxxxxx                                      xx xx          xx ",
+   "             xxxx       o       o                                              x     x        o        o                                  xxx ",
+   "     @       x  x                                                xxxxx         x     x                           x!!!x                   xxxx ",
+   "xxxxxxxxxxxxxx  xxxxxxxxxxxxxxx   xxxxxxxxxxxxxxxxxxxx     xxxxxxx   xxxxxxxxxxx     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "                              x   x                  x     x                                                                                  ",
+   "                              x!!!x                  x!!!!!x                                                                                  ",
+   "                              x!!!x                  x!!!!!x                                                                                  ",
+   "                              xxxxx                  xxxxxxx                                                                                  ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
+   "                                                                                                                                              ",
    "                                                                                "
   ],
 ];
@@ -439,11 +439,6 @@ var GAME_LEVELS = [
 
     var arrows = trackKeys(keyboardCodes);
 
-    // init
-    //var simpleLevel = new Level(simpleLevel);
-    // console.log(simpleLevel.width, 'x', simpleLevel.height);
-    //var display = new DisplayView(document.body, simpleLevel); 
-
     function runAnimation(frameFunc) {
         var start = null;
 
@@ -485,7 +480,7 @@ var GAME_LEVELS = [
                     alert("You win !");
             }); 
        }
-      startLevel(0); 
+      startLevel(1); 
     }
 
 
