@@ -6,7 +6,7 @@
         this.pos = pos;
         this.size = new Vector(1, 1);
         this.type = "lava";
-
+        
         if (type === "=") {
             this.speed = new Vector(2, 0);
         } else if (type === "|") {

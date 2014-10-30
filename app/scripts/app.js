@@ -1,15 +1,3 @@
-    // level
-    var simpleLevel = [
-        "                     ",
-        "                 =x  ",
-        "   x         oo   x  ",
-        "   x@       xxxx  x  ",
-        "   xxxxxx         x  ",
-        "        x!!!!!!!!!x  ",
-        "        xxxxxxxxxxx  ",
-        "                     "
-    ];
-
     // defined character for each symbol
     var actorChars = {
         "@": Player,
@@ -19,6 +7,29 @@
         "v": Lava 
     };
     
+        // keyboard tracking keys
+    var keyboardCodes= {
+        27: 'escape',
+        32: 'spacebar',
+        37: 'left',
+        38: 'up',
+        39: 'right'
+    };
+
+    function trackKeys(codes) {
+       var keyPressed = Object.create(null);
+       function handler(event) {
+        if(codes.hasOwnProperty(event.keyCode)) {
+            var down = event.type === "keydown";
+            keyPressed[codes[event.keyCode]] = "down";
+            event.preventDefault();
+        }
+       }
+      addEventListener("keydown", handler);
+      addEventListener("keyup", handler); 
+      return keyPressed;
+    }
+
     var arrows = trackKeys(keyboardCodes);
 
     // init
@@ -27,15 +38,15 @@
     //var display = new DisplayView(document.body, simpleLevel); 
 
     function runAnimation(frameFunc) {
-        var lastTime = null;
+        var start = null;
 
-        function frame(time) {
+        function frame(timeStamp) {
             var stop = false;
-            if(lastTime !== null) {
-                var timeStep = Math.min(time - lastTime, 100) / 1000;
-                stop = frameFunc(timeStep) === false;
+            if(start !== null) {
+                var progress = Math.min(timeStamp - start, 100) / 1000;
+                stop = frameFunc(progress) === false;
             }
-            lastTime = time;
+            start = timeStamp;
             if(!stop)
                 requestAnimationFrame(frame);
         }

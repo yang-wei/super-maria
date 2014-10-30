@@ -9,16 +9,17 @@
             for (var y = 0; y < this.height; y++) {
                 var line = plan[y], gridLine = [];
                 for (var x = 0; x < this.width; x++) {
+
                     var character = line[x],
                     // check if character is property of actorChars 
                         Actor = actorChars[character],
-                        type;
+                        type = null;
                     
                     if (Actor) {
                         // initial position of dynamic characters need to be stored
                         this.actors.push(new Actor(new Vector(x,y), character));
                     } else if (character === "x") {
-                        type = "wall"; 
+                        type = "wall";
                     } else if (character === "!") {
                         type = "lava";
                     }
@@ -77,13 +78,13 @@
         Level.prototype.animate = function(step, keys) {
             if(this.status != null)
                this.finishDelay -= step; 
-
             while(step > 0) {
                var thisStep = Math.min(step, opts.maxStep);
                this.actors.forEach(function(actor) {
                     actor.act(thisStep, this, keys);
                }, this);
                step -= thisStep;
+               console.log("new Step ", step);
            }
         };
 
