@@ -21,7 +21,7 @@
        function handler(event) {
         if(codes.hasOwnProperty(event.keyCode)) {
             var down = event.type === "keydown";
-            keyPressed[codes[event.keyCode]] = "down";
+            keyPressed[codes[event.keyCode]] = down;
             event.preventDefault();
         }
        }
@@ -56,6 +56,7 @@
     function runLevel(level, Display, callback) {
        var view = new DisplayView(document.body, level);
        runAnimation(function(step) {
+            console.log(arrows);
             level.animate(step, arrows);
             view.drawFrame(step);
             if(level.isFinished()) {

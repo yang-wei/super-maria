@@ -84,7 +84,6 @@
                     actor.act(thisStep, this, keys);
                }, this);
                step -= thisStep;
-               console.log("new Step ", step);
            }
         };
 
