@@ -1,10 +1,17 @@
+body {
+  margin: 0;
+}
+
 .background {
-    background: rgb(52, 166, 251);
+    background: #5C94FC;
     border-spacing: 0;
+    border-collapse: collapse;
 }
 
 .background td {
     padding: 0;
+    margin: 0;
+    width: 20px;
 }
 
 .actor {
@@ -20,7 +27,8 @@
 }
 
 .coin {
-    background: rgb(241, 229, 89);
+    background: rgb(241, 229, 5);
+    border-radius: 100%;
 }
 
 .player {
@@ -37,7 +45,7 @@
 
 .game {
     overflow: hidden;
-    max-width: 600px;
-    max-height: 450px;
+    max-width: 100%;
+    height: 100%;
     position: relative;
 }

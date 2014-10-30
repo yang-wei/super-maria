@@ -8,6 +8,7 @@
 
     // propertis of actor's action
     var opts = {
+        scale: 20, // TODO: width of td is set in style.css because of unknown browser default behaviour
         maxStep : 0.05,
         wobbleSpeed : 10,
         wobbleDist: 0.05,

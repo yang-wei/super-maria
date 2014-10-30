@@ -38,7 +38,7 @@
         }
 
         Level.prototype.isFinished = function() {
-            return this.status != null && this.finishedDelay < 0;
+            return this.status !== null && this.finishDelay < 0;
         };
         
         // return the type of character in a position
@@ -91,7 +91,7 @@
         Level.prototype.playerTouched = function(type, actor) {
             if(type === "lava" && this.status === null) {
                 this.status = "lost";
-                this.finishDelay = 1;
+                this.finishedDelay = 1;
             } else if(type === "coin") {
                 // remove collected coin
                 this.actors = this.actors.filter(function(other) {
@@ -103,7 +103,7 @@
                 });
                 if(allCoinsCollected) {
                     this.status = "won";
-                    this.finishDelay = 1;
+                    this.finishedDelay = 1;
                 }
             }
         };

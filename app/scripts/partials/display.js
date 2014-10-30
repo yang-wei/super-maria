@@ -17,7 +17,7 @@
     }
 
     // set the scale to pixel to display element
-    var scale = 20;
+    var scale = opts.scale;
     // draw static elements - wall, static lava, space 
     DisplayView.prototype.drawBackground = function() {
         var table = elem("table", "background");

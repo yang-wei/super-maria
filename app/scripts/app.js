@@ -56,7 +56,6 @@
     function runLevel(level, Display, callback) {
        var view = new DisplayView(document.body, level);
        runAnimation(function(step) {
-            console.log(arrows);
             level.animate(step, arrows);
             view.drawFrame(step);
             if(level.isFinished()) {
@@ -69,9 +68,9 @@
     }
 
     function runGame(plans, Display) {
-       function startLevel(n) {
+       function startLevel(n) { 
             runLevel(new Level(plans[n]), Display, function(status) {
-                if (status === "lost")
+                if (status === "lost") 
                     startLevel(n);
                 else if (n < plans.length - 1)
                     startLevel(n + 1);
