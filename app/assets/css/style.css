@@ -49,3 +49,30 @@ body {
     height: 100%;
     position: relative;
 }
+
+#win-msg {
+    max-width: 600px;
+    margin: 0px auto;
+    padding-top: 20%;
+    text-align: center;
+    position: relative;
+    display: none;
+}
+
+#win-msg h1 {
+    color: #5c94fc;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.restart-btn {
+    background: #5c94fc;
+    color: #ffffff;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #5c94fa;
+}

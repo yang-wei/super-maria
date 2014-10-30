@@ -32,6 +32,14 @@
 
     var arrows = trackKeys(keyboardCodes);
 
+    function displayWinMsg() {
+        document.getElementById("win-msg").style.display = "block";
+    }
+
+    function hideWinMsg() {
+        document.getElementById("win-msg").style.display = "none";
+    }
+
     function runAnimation(frameFunc) {
         var start = null;
 
@@ -70,12 +78,21 @@
                 else if (n < plans.length - 1)
                     startLevel(n + 1);
                 else
-                    alert("You win !");
+                    displayWinMsg(); 
             }); 
        }
-      startLevel(1); 
+      startLevel(0); 
+    }
+    
+    function startGame() {
+        runGame(GAME_LEVELS, DisplayView);
     }
 
+    // restart game after winning
+    var restart = document.getElementsByClassName("restart-btn")[0];
+    restart.addEventListener("click", function(){
+        startGame();
+        hideWinMsg();
+    });
 
-    runGame(GAME_LEVELS, DisplayView);
-
+    startGame();
