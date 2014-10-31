@@ -1,5 +1,5 @@
 ### How to play
-You can play this game online [here](yang-wei.github.io/super-maria)
+You can play this game online [here](http://yang-wei.github.io/super-maria)
 
 ### How to win
 Collect all coin to win.
