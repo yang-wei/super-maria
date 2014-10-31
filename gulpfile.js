@@ -18,7 +18,7 @@ gulp.task('script', function() {
     gulp.src([
         './app/scripts/commons/intro.js',
         './app/scripts/setting.js',
-        './app/scripts/partials/*.js',
+        './app/scripts/class/*.js',
         './app/scripts/app.js',
         './app/scripts/commons/outro.js'
     ])
