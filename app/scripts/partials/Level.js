@@ -37,12 +37,12 @@
             
         }
 
-        Level.prototype.isFinished = function() {
+        Level.method("isFinished", function() {
             return this.status !== null && this.finishDelay < 0;
-        };
+        });
         
         // return the type of character in a position
-        Level.prototype.isBlockedAt = function(pos, size) {
+        Level.method("isBlockedAt", function(pos, size) {
             var xStart = Math.floor(pos.x),
                 xEnd = Math.ceil(pos.x + size.x),
                 yStart = Math.floor(pos.y),
@@ -59,10 +59,10 @@
                     if(type) return type;
                 }
             }
-        };
+        });
         
         // function to check if 2 actor on same position 
-        Level.prototype.actorAt = function(actor) {
+        Level.method("actorAt", function(actor) {
             for(var i = 0; i < this.actors.length; i++) {
                 var otherActor = this.actors[i];
                 if( otherActor !== actor &&
@@ -73,9 +73,9 @@
                   )
                 return otherActor;    
             }
-        }
+        });
         
-        Level.prototype.animate = function(step, keys) {
+        Level.method("animate", function(step, keys) {
             if(this.status != null)
                this.finishDelay -= step; 
             while(step > 0) {
@@ -85,10 +85,10 @@
                }, this);
                step -= thisStep;
            }
-        };
+        });
 
         // react to what player had touch to decide win or lost
-        Level.prototype.playerTouched = function(type, actor) {
+        Level.method("playerTouched", function(type, actor) {
             if(type === "lava" && this.status === null) {
                 this.status = "lost";
                 this.finishedDelay = 1;
@@ -106,4 +106,4 @@
                     this.finishedDelay = 1;
                 }
             }
-        };
+        });
