@@ -16,3 +16,7 @@ npm install
 gulp
 ```
 Just make sure you have `npm` and `gulp` installed on your machine.
+
+### Build With
+ + plain Javascript
+ + Gulp.js - to concat all the js files into all.js
