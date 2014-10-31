@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 
 gulp.task('connect', function() {
     connect.server({
-        root: 'app',
+        root: '.',
         livereload: true
     })  
 });
@@ -24,7 +24,7 @@ gulp.task('script', function() {
     ])
         .pipe(connect.reload())
         .pipe(concat('all.js'))
-        .pipe(gulp.dest('./app/'));
+        .pipe(gulp.dest('.'));
 });
 
 gulp.task('watch', function() {
