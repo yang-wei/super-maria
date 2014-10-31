@@ -19,7 +19,7 @@
     // set the scale to pixel to display element
     var scale = opts.scale;
     // draw static elements - wall, static lava, space 
-    DisplayView.prototype.drawBackground = function() {
+    DisplayView.method("drawBackground", function() {
         var table = elem("table", "background");
         table.style.width = this.level.width * scale + "px";
         this.level.grid.forEach(function(line) {
@@ -30,10 +30,10 @@
             });
         });
         return table;
-    };
+    });
     
     // draw dynamic elements - player, moving lava, coin
-    DisplayView.prototype.drawActors = function() {
+    DisplayView.method("drawActors", function() {
         var wrap = elem("div");
         this.level.actors.forEach(function(actor) {
             var actorElem = wrap.appendChild(elem("div", "actor " + actor.type));
@@ -43,18 +43,18 @@
             actorElem.style.top = actor.pos.y * scale + "px";          
         });
         return wrap;
-    };
+    });
    
     // draw frame
-    DisplayView.prototype.drawFrame = function() {
+    DisplayView.method("drawFrame", function() {
         if(this.actorLayer) 
             this.wrap.removeChild(this.actorLayer);
         this.actorLayer = this.wrap.appendChild(this.drawActors()); 
         this.wrap.className = "game " + (this.level.status || ""); 
         this.scrollPlayerIntoView();
-    };
+    });
 
-    DisplayView.prototype.scrollPlayerIntoView = function() {
+    DisplayView.method("scrollPlayerIntoView", function() {
         var width = this.wrap.clientWidth,
             height = this.wrap.clientHeight,
             margin = width / 3;
@@ -77,9 +77,9 @@
             this.wrap.scrollTop = center.y - margin;
         else if(center.y > bottom - margin)
             this.wrap.scrollTop = center.y + margin -height;
-    };
+    });
     
-    DisplayView.prototype.clear = function() {
+    DisplayView.method("clear" ,function() {
         this.wrap.parentNode.removeChild(this.wrap);
-    };
+    });
 

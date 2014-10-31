@@ -3,11 +3,11 @@
         this.y = y;
     }
 
-    Vector.prototype.plus = function(step) {
+    Vector.method("plus", function(step) {
         return new Vector(this.x + step.x, this.y + step.y);
-    };
+    });
 
-    Vector.prototype.times = function(factor) {
+    Vector.method("times", function(factor) {
         return new Vector(this.x * factor, this.y * factor);
-    };
+    });
 
