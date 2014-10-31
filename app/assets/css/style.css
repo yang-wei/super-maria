@@ -3,7 +3,7 @@ body {
 }
 
 .background {
-    background: #5C94FC;
+    background: #b1b1b1;
     border-spacing: 0;
     border-collapse: collapse;
 }
@@ -19,7 +19,7 @@ body {
 }
 
 .lava {
-    background: rgb(255, 80, 80);
+    background: rgb(255, 83, 83);
 }
 
 .wall {
@@ -32,7 +32,7 @@ body {
 }
 
 .player {
-    background: rgb(64, 64, 64);
+    background: #4cab24; 
 }
 
 .lost .player {
